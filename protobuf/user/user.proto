@@ -11,14 +11,32 @@ message Address {
     string postal_code = 5;
 }
 
-message User {
+message UserRequest {
     string first_name = 1 ;
     string last_name = 2;
     string password = 3;
+    string password_again = 4;
+    string email = 5;
+    string phone_number = 6;
+    Address address = 7;
+}
+
+message UserResponse {
+    string first_name = 1 ;
+    string last_name = 2;
     string email = 4;
-    Address address = 5;
+    Address address = 5;  
 }
 
 message CreateUserRequest {
-    User user = 1;
+    UserRequest user = 1;
+}
+
+message CreateUserResponse {
+    UserResponse user = 1;
+}
+
+service UserService{
+    // Unary
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse){};
 }

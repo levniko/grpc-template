@@ -18,7 +18,15 @@ var _ = math.Inf
 func (this *Address) Validate() error {
 	return nil
 }
-func (this *User) Validate() error {
+func (this *UserRequest) Validate() error {
+	if this.Address != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Address); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("Address", err)
+		}
+	}
+	return nil
+}
+func (this *UserResponse) Validate() error {
 	if this.Address != nil {
 		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Address); err != nil {
 			return github_com_mwitkow_go_proto_validators.FieldError("Address", err)
@@ -27,6 +35,14 @@ func (this *User) Validate() error {
 	return nil
 }
 func (this *CreateUserRequest) Validate() error {
+	if this.User != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.User); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("User", err)
+		}
+	}
+	return nil
+}
+func (this *CreateUserResponse) Validate() error {
 	if this.User != nil {
 		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.User); err != nil {
 			return github_com_mwitkow_go_proto_validators.FieldError("User", err)
