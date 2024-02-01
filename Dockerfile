@@ -10,8 +10,9 @@ COPY go.* ./
 # Download all dependencies.
 RUN go mod download
 
-# Copy the source code into the container.
-COPY . .
+# Copy the source code and config file into the container.
+COPY . /app
+COPY config.toml /app
 
 # Build the application.
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
@@ -23,8 +24,9 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
-# Copy the binary from the builder stage.
+# Copy the binary and config file from the builder stage.
 COPY --from=builder /app/main .
+COPY --from=builder /app/config.toml .
 
 # Command to run the executable.
-CMD ["./cmd/main"]
+CMD ["./main"]

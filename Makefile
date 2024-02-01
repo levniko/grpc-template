@@ -26,7 +26,7 @@ docker-build:
 	docker-compose build
 
 # Stop and remove containers, networks, images, and volumes
-docker-clean-all: stop
+docker-clean-all:
 	docker-compose rm -f
 	docker system prune -af --volumes
 

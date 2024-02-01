@@ -11,15 +11,15 @@ import (
 	"strings"
 )
 
-type Service struct {
+type Usecase struct {
 	Repository IRepository
 }
 
-func NewUserService(r IRepository) *Service {
-	return &Service{Repository: r}
+func NewUserUsecase(r IRepository) *Usecase {
+	return &Usecase{Repository: r}
 }
 
-func (s *Service) CreateUser(ctx context.Context, req *user.UserRequest) (*models.User, error) {
+func (s *Usecase) CreateUser(ctx context.Context, req *user.UserRequest) (*models.User, error) {
 	_, err := s.Repository.FindByEmail(ctx, strings.ToLower(req.Email))
 	if err == nil {
 		return nil, errors.New(utils.EmailAlreadyExist)

@@ -1,15 +1,15 @@
 [PostgreSQL.Master]
-Host = "localhost"
+Host = "my-postgres-container"
 Port = 5432
 User = "postgres"
-Password = "password"
+Password = "mysecretpassword"
 DBName = "mydatabase"
 
 [[PostgreSQL.Slaves]]
-Host = "localhost"
-Port = 5433
+Host = "my-postgres-container"
+Port = 5432
 User = "postgres"
-Password = "password"
+Password = "mysecretpassword"
 DBName = "mydatabase"
 
 [Redis.Master]

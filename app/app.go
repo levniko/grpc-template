@@ -3,6 +3,10 @@ package app
 import (
 	"fmt"
 	"grpc-template/internal/config"
+	"grpc-template/internal/database"
+	users "grpc-template/internal/modules/user"
+	"grpc-template/internal/server"
+	"grpc-template/protobuf/user"
 	"log"
 	"net"
 	"os"
@@ -34,8 +38,12 @@ func (a *App) Run(port string, timeout time.Duration) error {
 	if err != nil {
 		return fmt.Errorf("failed to listen: %v", err)
 	}
+	db, _ := database.NewDBManager(&a.config)
+	userRepo := users.NewUserRepository(db)
+	userUsecase := users.NewUserUsecase(userRepo)
+	userServiceServer := server.NewUserServiceServer(*userUsecase)
+	user.RegisterUserServiceServer(a.server, userServiceServer)
 
-	// Start the server in a separate goroutine
 	go func() {
 		if err := a.server.Serve(lis); err != nil {
 			log.Printf("failed to serve: %v", err)

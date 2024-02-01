@@ -9,19 +9,19 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type UserController struct {
-	userService users.Service
+type UserServiceServer struct {
+	userUsecase users.Usecase
 }
 
-func NewUserController(userService users.Service) *UserController {
-	return &UserController{
-		userService: userService,
+func NewUserServiceServer(userUsecase users.Usecase) *UserServiceServer {
+	return &UserServiceServer{
+		userUsecase: userUsecase,
 	}
 }
 
 // CreateUser, is an imlementation of gRPC CreateUser RPC method
-func (u *UserController) CreateUser(ctx context.Context, req *user.CreateUserRequest) (*user.CreateUserResponse, error) {
-	createdUser, err := u.userService.CreateUser(ctx, req.GetUser())
+func (u *UserServiceServer) CreateUser(ctx context.Context, req *user.CreateUserRequest) (*user.CreateUserResponse, error) {
+	createdUser, err := u.userUsecase.CreateUser(ctx, req.GetUser())
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to create user: %v", err)
 	}
