@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"grpc-template/internal/config"
 	"log"
 	"net"
 	"os"
@@ -14,12 +15,18 @@ import (
 
 type App struct {
 	server *grpc.Server
+	config config.Config
 }
 
-func New() *App {
+func New() (*App, error) {
+	cfg, err := config.New("./config.toml")
+	if err != nil {
+		return nil, err
+	}
 	return &App{
 		server: grpc.NewServer(),
-	}
+		config: *cfg,
+	}, nil
 }
 
 func (a *App) Run(port string, timeout time.Duration) error {

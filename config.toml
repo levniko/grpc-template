@@ -1,0 +1,23 @@
+[PostgreSQL.Master]
+Host = "localhost"
+Port = 5432
+User = "postgres"
+Password = "password"
+DBName = "mydatabase"
+
+[[PostgreSQL.Slaves]]
+Host = "localhost"
+Port = 5433
+User = "postgres"
+Password = "password"
+DBName = "mydatabase"
+
+[Redis.Master]
+Addr = "localhost:6379"
+Password = ""
+DB = 0
+
+[[Redis.Slaves]]
+Addr = "localhost:6380"
+Password = ""
+DB = 0
